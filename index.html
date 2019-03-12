@@ -1,0 +1,606 @@
+<html>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="./CSS/spectre.css" />
+	<title>Final Assignment</title>
+	<meta charset="UTF-8" />
+	<style>
+		 #heading { 
+			 text-align: center; 
+			 font-family: serif; 
+			 font-weight: bolder; 
+			 color:#000000;
+			 } 
+			 #subheading {
+				  margin-top: 50px; 
+					 color: #b54300; 
+					text-align: center;
+		     font-size: 30px; 
+				 font-family: 'Playfair Display SC', serif;
+			   }
+				 #headerImage{
+
+					 margin-left:400px;
+				 }
+				#SearchSelect {
+
+				width: 80px;
+				}
+				#nameColumn { width: 150px; }
+				 .active { color: red; }
+				#selectedMenu {
+					width:960px;
+			   margin-left : 200px;
+				background-color : gray;
+				}
+				 #selectedMenuTable { 
+					 width:700px; 
+				   color:black; 
+				 margin-left : 100px;
+				 background-color : white; 
+				 } 
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div id="headerImage">
+			<img src="./src/hotHouselogo.png">
+		</div>
+			
+	
+		<h1 id="heading"> Welcome to The Hot House</h1>
+		<h3 id="subheading">Plan Your Meal With Nutrition Calculator </h3>
+	  <h1 id="heading"> Menu </h1>
+		<div class="columns">
+			<div class="col-1"></div>
+			<div class="col-10">
+		
+				<table id="MenuTable" class="table table-striped table-hover">
+					<thead>
+						<tr class="headings">
+							<th id="image"></th>
+							<th id="name">Name</th>
+							<th>Quantity</th>
+							<th id="ServingSize">Serving Size</th>
+							<th id="category">Category</th>
+							<th id="calories">Calories</th>
+						  <th id="fat">Fat</th>
+							<th id="protein">Protein</th>
+						  <th id="carb">Carbs*</th>
+						  <th id="Vegan">Vegan</th>
+						  <th id="glutenfree">Gluten Free</th>
+							<th id="cost">Cost</th>
+							<th> </th>
+						</tr>
+						<tr>
+							<th>
+								<div class="form-group">
+									<label>Search for Manu</label>
+
+
+								</div>
+							</th>
+							<th>
+								<div class="form-group" id="nameColumn">
+									<input id="nameSearch" class="form-input" type="text" placeholder="Name search">
+		                </div>
+		              </th>
+								
+		              <th>
+		                
+		              </th>
+		              <th>
+		              </th>
+									<th>
+										<div class="form-group" id="SearchSelect">
+											<select id="categorySearch"  class="form-input">
+											</select>
+										</div>
+									</th>
+									<th>
+										<div class="form-group" id="SearchSelect">
+										<select id="calorieSearch" class="form-input">
+											<option data-calorie="0:@Int32.MaxValue" value="all">All</option>
+											<option data-calorie="1:200" value="1">1 - 200</option>
+											<option data-calorie="200:500" value="2">200 - 500</option>
+											<option data-calorie="500:@Int32.MaxValue" value="4">500 + </option>
+										</select>
+									</th>
+									<th>
+									
+									</th>
+									<th>
+											<div class="form-group" id="SearchSelect">
+											<select id="proteinSearch" class="form-input">
+																							    <option data-protein="0:@Int32.MaxValue" value="all">All</option>
+																							    <option data-protein="0:10" value="1">0 - 10</option>
+																							    <option data-protein="10:50" value="2">10 - 50</option>
+																									<option data-protein="50:@Int32.MaxValue" value="4">50 + </option>
+																							
+																						</select>																						                </div>
+									</th>
+									<th>
+									</th>
+									<th>
+									</th>
+									<th>
+									</th>
+									<th>
+										<div class="form-group" id="SearchSelect">
+											<select id="costSearch" class="form-input">
+												    <option data-price="0:@Int32.MaxValue" value="all">All</option>
+												    <option data-price="0:10" value="1">$0 - $10</option>
+												    <option data-price="11:30" value="2">$11 - $30</option>
+														<option data-price="30:@Int32.MaxValue" value="4">$30 + </option>
+												
+											</select>
+
+										</div>
+									</th>
+									<th>
+										<a id="clearSearch" href="#" >Clear Filters</a>
+									</th>
+		            </tr>
+		          </thead>
+		          <tbody>
+		            
+		          </tbody>
+		        </table>
+		<div style="margin-top:30px;">
+			<h3 id="subheading">Order Your Meal</h3>
+						<div id="selectedMenu">
+							<table id="selectedMenuTable" class="table table-striped table-hover">
+								<thead>
+									<tr class="headings">
+										
+										<th id="name">Name</th>
+										<th id="quality">Quantity</th>
+										<th id="menuCal">Calories</th>
+										<th id="fat">Fat</th>
+										<th id="protein">Protein</th>
+										<th id="carb">Carbs*</th>
+									  <th id="cost">Cost</th>
+										<th> </th>
+									</tr>
+									</thead>
+									<tbody>
+									
+									</tbody>
+									</table>
+						</div>
+					</div>
+		</div>	
+	</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+ crossorigin="anonymous"></script>
+	<script>
+	  var categories = [ 'All', 'Salad', 'Sandwich', 'Soups', 'Curry', 'Wrap', 'Dessert'];
+		var Menu = [ 
+		 { 
+		 image: '../src/vegetable-sandwich.jpg',
+      name: 'Vegetable Sandwich',
+		  ServingSize : 180 ,
+		  category: categories[2],
+			calories: 252,
+			fat : 3 ,
+			protein : 10 ,
+			carb : 41 ,
+			Vegan : 'Yes',
+      glutenfree : 'No',
+		  cost: 4.42 
+			}, 
+			{ 
+				image:'../src/chicken-bean-soup.jpg',
+				 name: 'Chicken Bean Soup',
+				 ServingSize : 100, 
+				 category: categories[3], 
+				 calories: 129, 
+				 fat : 4 , 
+				 protein : 5 , 
+				 carb : 16 , 
+				 Vegan : 'No', 
+				 glutenfree: 'Yes', 
+				 cost: 3.49
+			}, 
+			{ 
+				 image:'../src/Chicken-Noodle-Soup.jpg',
+				 name: 'Chicken Noodle Soup', 
+				 ServingSize : 100, 
+				 category: categories[3], 
+				 calories: 151, 
+				 fat : 8 , 
+				 protein : 10 , 
+				 carb : 19, 
+				 Vegan : 'No', 
+				 glutenfree: 'No', 
+				 cost: 3.49
+			},
+		  { 
+				 image:'../src/garden-salad.png',
+				 name: 'Garden Fresh Side Salad', 
+				 ServingSize : 78, 
+				 category: categories[1], 
+				 calories: 40, 
+				 fat : 2 , 
+				 protein : 3 , 
+				 carb : 3, 
+				 Vegan : 'Yes', 
+				 glutenfree: 'Yes', 
+				 cost: 6.99
+				}, 
+				{ 
+					 image:'../src/greek-salad-crispy-chicken.png',
+					 name: 'Greek Salad With Crispy Chicken', 
+					 ServingSize : 294, 
+					 category: categories[1], 
+					 calories: 440, 
+					 fat : 21 , 
+					 protein : 27 , 
+					 carb : 39, 
+					 Vegan : 'No', 
+					 glutenfree: 'Yes', 
+					 cost:9.49
+				 }, 
+				 {
+					 image:'../src/ChickenCurry_with_Brown_Rice.jpg',
+					 name: 'Chicken Curry With Brown Rice', 
+					 ServingSize : 164, 
+					 category: categories[4], 
+					 calories: 428, 
+					 fat : 9 , 
+					 protein : 55 , 
+					 carb : 30, 
+					 Vegan : 'No', 
+					 glutenfree: 'Yes', 
+					 cost: 12.50
+				 }, 
+				 { 
+					 image:'../src/grilled-chicken-snack-wrap.png',
+					 name: 'Grilled Chicken Wrap', 
+					 ServingSize : 114, 
+					 category: categories[5], 
+					 calories: 240, 
+					 fat : 8 , 
+					 protein : 17 , 
+					 carb : 25 ,
+				   Vegan : 'No', 
+					 glutenfree: 'No', 
+					 cost: 3.49
+				},
+				 { 
+					 image:'../src/fudge-cherry-cake-.jpg',
+					 name: 'Cherry Fudge Cake', 
+					 ServingSize : 1 , 
+					 category: categories[6], 
+					 calories: 901, 
+					 fat : 19 , 
+					 protein :3 , 
+					 carb : 79, 
+					 Vegan : 'No', 
+					 glutenfree: 'No', 
+					 cost: 22.00 
+					 },
+					 { 
+						 image:'../src/Vanilla-Cake.jpg',
+						 name: 'Vanilla Birthday Cake', 
+						 ServingSize : 67 , 
+						 category: categories[6], 
+						 calories: 210, 
+						 fat : 7 , 
+						 protein :2, 
+						 carb : 35, 
+						 Vegan : 'No', 
+						 glutenfree: 'No', 
+						 cost: 5.00 
+					 },
+					 { 
+						 image:'../src/Chocolate-Cake.jpg',
+						 name: 'Chocolate Birthday Cake', 
+						 ServingSize : 67, 
+						 category: categories[6], 
+						 calories: 210, 
+						 fat : 8 , 
+						 protein :2, 
+						 carb : 33, 
+						 Vegan : 'No', 
+						 glutenfree: 'No', 
+						 cost: 5.00 
+						 },
+						 { 
+							 image:'../src/hot-caramel-sundae.png',
+						 name: 'Hot Caramel Sundae',
+						 ServingSize : 180, 
+							category: categories[6], 
+							calories: 340, 
+							fat : 8 , 
+							protein :6, 
+							carb : 63, 
+							Vegan : 'No', 
+							glutenfree: 'No', 
+							cost: 6.49 
+							},
+							{ 
+								image:'../src/Veganfruit-n-fibre-muffin.png',
+								name: 'Fruit and Fibre Vegan Muffin', 
+								ServingSize : 129 , 
+								category: categories[6], 
+								calories: 380, 
+								fat : 14 , 
+								protein :6, 
+								carb : 60, 
+								Vegan : 'Yes', 
+								glutenfree: 'Yes', 
+								cost: 3.49 
+								}
+				]; 
+
+
+		    appendItems(Menu);
+
+			 categories.forEach(function(category) { 
+
+					 $('#categorySearch').append(`<option>${category}</option>`); });
+					$('#MenuTable .headings th').click(function() { 
+					 $('#MenuTable .headings th').removeClass('active'); 
+					 $(this).addClass('active');
+           if ($(this).attr('sort') !== 'asc') { 
+						 $(this).attr('sort', 'asc'); 
+						 } else { 
+							 $(this).attr('sort', 'desc'); 
+							 } 
+						let currentSort = $('.headings .active').attr('sort'); 
+						let currentSortColumnId = $('.headings .active').attr('id');  
+						let sortedFoods = sortItems(Menu, currentSortColumnId, currentSort); 
+						 
+						appendItems(sortedFoods);
+        });
+      
+			   $('#clearSearch').on('click', function() {
+					 	/*	 $('#nameSearch').val('');
+								 $('#categorySearch').find('option:first').attr('selected', 'selected');
+							   $('#proteinSearch').find('option:first').attr('selected', 'selected'); 
+							   $('#costSearch').find('option:first').attr('selected', 'selected');
+							   $('#calorieSearch').find('option:first').attr('selected', 'selected');
+							  $('#MenuTable .headings th').removeClass('active'); */
+								 location.reload();
+								
+					});
+					 
+				 function appendItems(Menu) { 
+				 $('#MenuTable tbody').html(''); 
+				 Menu.forEach(function(MenuItem) { 
+					$('#MenuTable tbody').append(`<tr>
+					<td><img src="${MenuItem.image}"/></td>
+					<td id="menuName">${MenuItem.name}</td>
+					<td> <select id="quantitySelect" style="height: 25px; width: 50px;">
+					            <option value="1">1</option>
+					            <option value="2">2</option>
+								      <option value="3">3</option>
+										  <option value="4">4</option>
+					        </select>
+									</td>
+					<td id="menuSize">${MenuItem.ServingSize}</td>
+					<td>${MenuItem.category}</td>
+					<td id="menuCal">${MenuItem.calories}</td>
+					<td id="menuFat">${MenuItem.fat}</td>
+					<td id="menuProtein">${MenuItem.protein}</td>
+					<td id="menuCarb">${MenuItem.carb}</td>
+					<td>${MenuItem.glutenfree}</td>
+					<td>${MenuItem.Vegan}</td>
+					<td id="menuCost">$${MenuItem.cost}</td>
+					<td><button id='addtoMenu' class='btn btn-primary'>Add To Meal</button></td>
+				</tr>
+				` );
+				
+				 }) 
+				}
+	 $('select#quantitySelect').trigger("change");
+	 $('select#quantitySelect').on('change', function () { //Your code });
+	   var quantity = $(this).val();
+		 event.preventDefault();
+			for (var i in Menu) { 
+				
+				if (Menu[i].name === $(this).parents('td').siblings('#menuName').text()) { 
+					var s = Menu[i].ServingSize * quantity; 
+					$(this).parents('td').siblings('#menuSize').text(s); 
+					var Cal = Menu[i].calories * quantity; 
+					$(this).parents('td').siblings('#menuCal').text(Cal);
+					var fat = Menu[i].fat * quantity; 
+					$(this).parents('td').siblings('#menuFat').text(fat);  
+					var protein = Menu[i].protein * quantity; 
+					$(this).parents('td').siblings('#menuProtein').text(protein); 
+					var Carb = Menu[i].carb * quantity; 
+					$(this).parents('td').siblings('#menuCarb').text(Carb);
+					var cost = Menu[i].cost * quantity; 
+					$(this).parents('td').siblings('#menuCost').text("$"+ cost); 
+					$(this).closest("tr").css('font-weight','bold'); 
+					} 
+					}
+				 });
+
+
+			 $('#nameSearch').on('keyup', filterMenu);
+			 $('#categorySearch').on('change', filterMenu);
+			 $('#calorieSearch').on('change', filterMenu);
+			 $('#proteinSearch').on('change', filterMenu);
+			 $('#costSearch').on('change', filterMenu);
+			 
+			  function filterMenu() { 
+					let nameSearchValue = $('#nameSearch').val().toLowerCase();
+				  let categorySearchValue = $('#categorySearch').val();
+		      let proteinRange = $('#proteinSearch').find(':selected').data('protein'); 
+					let calorieSearchValue = $('#calorieSearch').find(':selected').data('calorie');
+				  let sortedFoods = sortItems(Menu);
+          let filteredMenu = sortedFoods.filter(function(foodItem) { 
+
+						return foodItem.name.toLowerCase().indexOf(nameSearchValue) > -1;
+						 }) .filter(function(foodItem) { 
+							
+							if (categorySearchValue === 'All') { 
+								return true; 
+								} return foodItem.category === categorySearchValue;
+
+			          }) .filter(function(foodItem) { 
+								// alert($('#costSearch').children('option:selected').data('price'));
+								 var costRange = $('#costSearch').children('option:selected').data('price'); 
+								 
+								 var a = costRange.split(':'); 
+								 var l = parseFloat(a[0]); 
+								 var u = parseFloat(a[1]);
+							
+				 				if(costRange === '0:@Int32.MaxValue') {
+											 return true;
+												} else { 
+								if (foodItem.cost>= l && foodItem.cost <= u ) { 
+														return true; 
+														} 
+														else { 
+															return false; 
+															} 
+														}
+														
+						}).filter(function(foodItem) {
+
+							 var a = proteinRange.split(':'); 
+							 console.log(a);
+								var l = parseFloat(a[0]); 
+								var u = parseFloat(a[1]); 
+								 console.log(l , u);
+								if(proteinRange === '0:@Int32.MaxValue') { 
+									 return true;
+									 } else { 
+										if (foodItem.protein >= l && foodItem.protein <= u ) { 
+											return true; 
+										}
+										 else { return false; }
+											} 
+					}) .filter(function(foodItem) { 
+						console.log(calorieSearchValue);
+						 var a = calorieSearchValue.split(':'); 
+					   var l = parseFloat(a[0]); 
+					   var u = parseFloat(a[1]); 
+					  if(calorieSearchValue === '0:@Int32.MaxValue') {
+
+              return true; 
+
+						 } else { 
+							 if (foodItem.calories >= l && foodItem.calories <=u ) { 
+								 return true; 
+								 } 
+								 else { 
+									 return false; 
+									 } 
+						 } 
+					});
+      
+			appendItems(filteredMenu); 
+			
+			}
+ 
+	
+		 function sortItems(items, sortBy, direction) { 
+			 if (!direction) 
+			     {
+						  direction = 'asc'; 
+					} 
+			    return [...items].sort(function(a,b) {
+				  if (a[sortBy] > b[sortBy]) {
+						 return direction === 'asc' ? 1 : -1;
+						 } 
+					if (a[sortBy] < b[sortBy]) { 
+						return direction === 'asc' ? -1 : 1; } 
+						return 0; 
+						}); 
+				}
+
+
+				 //$('[id~=addtoMenu').click(function() {
+		 $('[id~=addtoMenu').on('click', function(){
+          
+						var quantity = jQuery("select#quantitySelect option:selected").val();
+						var name = $(this).parents('td').siblings('#menuName').text(); 
+						var Cal = $(this).parents('td').siblings('#menuCal').text(); 
+						var Fat =  $(this).parents('td').siblings('#menuFat').text(); 
+						var protein = $(this).parents('td').siblings('#menuProtein').text(); 
+						var Carb = $(this).parents('td').siblings('#menuCarb').text(); 
+						var cost = $(this).parents('td').siblings('#menuCost').text().substring(1); 
+
+
+							 $('#selectedMenuTable tbody').append(`<tr id="menuItem">
+								<td id="SmenuName">${name}</td>
+								<td id="Squality">${quantity}</td>
+								<td id="SmenuCal">${Cal}</td>
+								<td id="SmenuFat">${Fat}</td>
+								<td id="SmenuProtein">${protein}</td>
+								<td id="SmenuCarb">${Carb}</td>
+								<td id="SmenuCost">$${cost}</td>
+								<td></td>
+											</tr>
+											` );
+
+		 var totalCal = 0,totalFat=0,totalprotein=0 , totalCarb=0 ,totalcost=0 ;
+
+						$('#selectedMenuTable tbody').find("tr[id='menuItem']").each(function () { 
+					 
+							 totalCal +=  parseInt($(this).find('#SmenuCal').text()); 
+						   totalFat +=  parseInt($(this).find('#SmenuFat').text());
+						   totalprotein +=  parseInt($(this).find('#SmenuProtein').text());
+							 totalCarb +=  parseInt($(this).find('#SmenuCarb').text()); 
+							 totalcost +=  parseFloat($(this).find('#SmenuCost').text().substring(1)); 
+						// do something with productId, product, Quantity 
+							
+					 });
+					 
+					 var HST = 0.13; 
+					 var tax = totalcost*HST; 
+					 var total = (totalcost + tax).toFixed(2);
+
+
+
+					 
+				  // $('#selectedMenuTable tbody').find("tr:last-child").remove();
+					 $('#selectedMenuTable tbody').append(`<tr id="totalCountMenu" style="font-weight:bold">
+						<td></td>
+						<td><label>Subtotal:</label></td>
+						<td>${totalCal}</td>
+						<td>${totalFat}</td>
+						<td>${totalprotein}</td>
+						<td>${totalCarb}</td>
+						<td>$${totalcost.toFixed(2)}</td>
+						<td></td></tr>
+						<tr id="tax">
+							<td></td>	<td></td><td></td><td></td><td></td>
+						<td><label>Tax:</label></td>
+						<td>${tax.toFixed(2)}</td>
+						</tr>
+						<tr id="grandTotal">
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td><label>Total:</label></td>
+							<td>${total}</td>
+							</tr>
+						` );
+						 var rowCount = $('#selectedMenuTable tbody').find('tr').length; console.log(rowCount);
+            if(rowCount > 4){
+
+							 $('#selectedMenuTable tbody').find("#totalCountMenu:first").remove();
+							 $('#selectedMenuTable tbody').find("#tax:first").remove();
+							 $('#selectedMenuTable tbody').find("#grandTotal:first").remove();
+
+						}
+
+
+
+   });
+
+					 
+
+
+	</script>
+</body>
+
+</html>

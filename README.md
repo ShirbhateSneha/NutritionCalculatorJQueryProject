@@ -1,2 +1,0 @@
-# NutritionCalculatorJQueryProject
-Created with CodeSandbox
